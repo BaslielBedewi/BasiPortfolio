@@ -1,60 +1,53 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Marquee from "react-fast-marquee";
 import designs from "../Data/design";
+import Profile from '../Assets/Profile/Profile pic.png'
+import ParticleImage from "../Components/ParticleImage";
 
 export default function Home() {
-  const scrollRef = useRef(null);
-  const textRef = useRef(null);
-  const [scrollX, setScrollX] = useState(0);
-
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const onWheel = (e) => {
-      e.preventDefault();
-      container.scrollLeft += e.deltaY;
-      setScrollX(container.scrollLeft);
-    };
-
-    container.addEventListener("wheel", onWheel, { passive: false });
-    return () => container.removeEventListener("wheel", onWheel);
-  }, []);
-
-  // Framer Motion: fade out text as scroll increases
-  const opacity = scrollX < 300 ? 1 - scrollX / 300 : 0;
-
   return (
-    <section className="min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="flex w-full items-center gap-12">
-        {/* Text Block */}
-        <motion.div className="w-1/3 min-w-[250px]">
-          <h1 className="text-5xl font-bold mb-4">HI, I'M BASLIEL BEDEWI</h1>
-          <p className="">
-            I design futuristic, minimal digital experiences. Scroll to explore
-            my work.
+    <div className="relative flex justify-center items-center h-screen w-full overflow-hidden">
+      <ParticleImage/>
+      {/* <Marquee speed={60} gradient={false}>
+        {designs.map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-col justify-between items-center gap-6 mx-3 text-lg font-medium"
+          >
+            <img
+              src={item.image}
+              alt=""
+              className="w-[400px] rounded-xl blur-sm p-4 grayscale"
+            />
+          </div>
+        ))}
+      </Marquee> */}
+      <img src={Profile} alt="" className="absolute h-full"/>
+      <div className=" z-10 flex flex-col justify-between  w-full  px-5  ">
+        <div className="w-3/6 space-y-4 flex flex-col justify-start items-start text-start ">
+          <h1 className="font-bold text-6xl text-black">
+            Hi, I'M BASLIEL BEDEWI
+          </h1>
+          <p className="ml-20 ">
+            I am an exprienced Graphics Designer with over 3 years of
+            exprience.I specilize in: <span className="block font-bold mt-2"> Logo Design,Brand Identity,Visual Identity,
+            Poster Design , Illustrations, Social Media Content, Character
+            Development and Motion Design.</span>
           </p>
-        </motion.div>
+        </div>
 
-        {/* Image Scroll */}
-        <div
-          ref={scrollRef}
-          className="scroll-container flex gap-6 overflow-x-auto no-scrollbar w-2/3"
-        >
-          <div className="flex gap-6 pl-[50vw]">
-            {" "}
-            {/* Add left spacing */}
-            {designs.map((design) => (
-              <img
-                key={design.id}
-                src={design.image}
-                alt=""
-                className="w-[400px] h-[500px] object-cover rounded-xl shrink-0 transition duration-300 transform hover:-translate-y-2 hover:scale-105"
-              />
-            ))}
+        <div className="flex flex-col justify-end items-end text-start space-y-4">
+          <h1 className="font-bold text-2xl">Tools I use</h1>
+          <div className="mr-10">
+            <li>Adobe Photoshop</li>
+            <li>Adobe Illustrator</li>
+            <li>Adobe After Effect</li>
+            <li>Adobe Indesign</li>
+            <li>Figma</li>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
